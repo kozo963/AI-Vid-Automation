@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AI-Vid-Automation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0216ae4c2796464baae55879284533239ea5cf1c")]
 [assembly: System.Reflection.AssemblyProductAttribute("AI-Vid-Automation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AI-Vid-Automation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

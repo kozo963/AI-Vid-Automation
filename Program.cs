@@ -1,7 +1,18 @@
-﻿internal class Program
+﻿using AI_Vid_Automation.Controller;
+using AI_Vid_Automation.Models;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
+using System.Text;
+internal class Program
 {
-    private static void Main(string[] args)
+    static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        while (true)
+        {
+            Console.WriteLine("Enter prompt");
+            Console.WriteLine(DeepSeekController.GetAnswerAsync(Console.ReadLine()).Result);
+            Console.WriteLine();
+        }
+
     }
 }
