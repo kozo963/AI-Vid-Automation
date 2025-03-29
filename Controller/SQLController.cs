@@ -11,9 +11,35 @@ namespace AI_Vid_Automation.Controller
     {
         static AividAutomationDbContext context = new AividAutomationDbContext();
 
-        public static List<VideoData> GetVideoDataToDo()
+        internal static Aiprompt GetPrompt(int ID)
         {
-            return context.VideoData.Where(x => x.IsDone == false || x.IsDone == null).ToList();
+            return context.Aiprompts.Where(x => x.Id == ID).FirstOrDefault();
+        }
+
+        internal static void AddVideoData(VideoData videoData)
+        {
+            context.Add(videoData);
+            context.SaveChanges();
+        }
+        internal static void UpdateVideoData(VideoData videoData)
+        {
+            context.VideoData.Update(videoData);
+            context.SaveChanges();
+        }
+        internal static VideoData GetVideoToDo()
+        {
+            return context.VideoData.Where(x => x.IsDone == false && x.IsStoryBoard == false).FirstOrDefault();
+        }
+
+        internal static void AddStoryBoards(List<StoryData> storyDatas)
+        {
+            context.AddRange(storyDatas);
+            context.SaveChanges();
+        }
+
+        internal static List<VideoData> GetAllVideos()
+        {
+            return context.VideoData.ToList();
         }
     }
 }

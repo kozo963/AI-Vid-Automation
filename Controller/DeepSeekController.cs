@@ -5,13 +5,25 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AI_Vid_Automation.Controller
 {
     public static class DeepSeekController
     {
+        private static string ExtractJsonObject(string text)
+        {
+            // Use a regular expression to find the JSON object
+            string pattern = @"\{.*\}";
+            Match match = Regex.Match(text, pattern, RegexOptions.Singleline);
 
+            if (match.Success)
+            {
+                return match.Value;
+            }
+            return null;
+        }
         public static async Task<string> GetAnswerAsync(string prompt)
         {
             //OpenRouter API key
@@ -26,7 +38,8 @@ namespace AI_Vid_Automation.Controller
                     model = "deepseek/deepseek-r1:free", // DeepSeek model
                     messages = new[]
                     {
-                    new { role = "user", content = prompt }
+                        new { role = "user", content = prompt 
+                    }
                 }
             };
 
@@ -51,8 +64,8 @@ namespace AI_Vid_Automation.Controller
                     //Console.WriteLine("Response: " + responseBody);
 
                     JObject json = JObject.Parse(responseBody);
-                    //Console.WriteLine(json["choices"][0]["message"]["content"].ToString());
-                    return json["choices"][0]["message"]["content"].ToString();
+                    //hiConsole.WriteLine(json["choices"][0]["message"]["content"].ToString());
+                    return ExtractJsonObject(json["choices"][0]["message"]["content"].ToString());
                 }
                 else
                 {
@@ -63,6 +76,5 @@ namespace AI_Vid_Automation.Controller
             }
             return "Error";
         }
-
     }
 }

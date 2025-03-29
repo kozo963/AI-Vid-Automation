@@ -17,6 +17,8 @@ public partial class AividAutomationDbContext : DbContext
 
     public virtual DbSet<Aiprompt> Aiprompts { get; set; }
 
+    public virtual DbSet<StoryData> StoryData { get; set; }
+
     public virtual DbSet<VideoData> VideoData { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,11 +37,26 @@ public partial class AividAutomationDbContext : DbContext
             entity.Property(e => e.Prompt).IsUnicode(false);
         });
 
+        modelBuilder.Entity<StoryData>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__StoryDat__3214EC279DBFED07");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.StoryBoard).IsUnicode(false);
+            entity.Property(e => e.VideoDataId).HasColumnName("VideoDataID");
+
+            entity.HasOne(d => d.VideoData).WithMany(p => p.StoryData)
+                .HasForeignKey(d => d.VideoDataId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__StoryData__Video__5EBF139D");
+        });
+
         modelBuilder.Entity<VideoData>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__VideoDat__3214EC278C63EBFE");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.EnviromentPrompt).IsUnicode(false);
             entity.Property(e => e.Idea).IsUnicode(false);
             entity.Property(e => e.Text).IsUnicode(false);
         });
